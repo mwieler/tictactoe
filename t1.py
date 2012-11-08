@@ -79,46 +79,50 @@ class game():
 				open_spaces.append(space)
 		return open_spaces
 
-	def max_utility(self):
+	def max_utility(self): #outputs a list of (move,utility) tuples
 		self.player = 2
 		if self.is_game_over():
-			self.display_board()
-			print "max_utility fcn utility returns:",self.utility()
+			#self.display_board()
+			#print "max_utility fcn utility returns:",self.utility()
 			return [(None,self.utility())]
 		else:
-			successor_utilities = []
+			move_utilities = []
 			open_spaces = self.get_open_board_spaces()
 			#self.display_board()
 			#print "In max, Open spaces list is", open_spaces
 			for space in open_spaces:
+				self.player = 2
+				print "max_utility makes move as player", self.player
 				self.make_move(space)
-				_ , utility = self.min_utility()[0]
-				successor_utilities.append((space, utility))
+				_ , utility = self.min_utility()[0] #min_utility returns (move,utility)
+				move_utilities.append((space, utility))
 				self.erase_move(space)
-			#print "Max utility fcn outputs",successor_utilities 
-			#print "unsorted successors: ", successor_utilities
-			successor_utilities.sort(key= lambda elem: elem[1])
-			print "sorted successors: ", successor_utilities
-			return successor_utilities
+			#print "Max utility fcn outputs",move_utilities 
+			#print "unsorted successors: ", move_utilities
+			move_utilities.sort(key= lambda elem: elem[1])
+			#print "sorted successors: ", move_utilities
+			return move_utilities
 
 	def min_utility(self):
 		self.player = 1
 		if self.is_game_over():
-			self.display_board()
-			print "min_utility fcn utility returns:",self.utility()
+			#self.display_board()
+			#print "min_utility fcn utility returns:",self.utility()
 			return [(None,self.utility())]
 		else:
-			successor_utilities = []
+			move_utilities = []
 			open_spaces = self.get_open_board_spaces()
-			print "In min, Open spaces list is", open_spaces
+			#print "In min, Open spaces list is", open_spaces
 			for space in open_spaces:
+				self.player = 1 #this line added by me to fix a bug - would switch when min was ran twice in a row, running min as player 2
+				print "min_utility makes move as player", self.player
 				self.make_move(space)
 				_ , utility = self.max_utility()[-1]
-				successor_utilities.append((space,utility))
+				move_utilities.append((space,utility))
 				self.erase_move(space)
-			#print "Min utility fcn outputs",successor_utilities
-			successor_utilities.sort(key= lambda elem: elem[1])
-			return successor_utilities
+			#print "Min utility fcn outputs",move_utilities
+			move_utilities.sort(key= lambda elem: elem[1])
+			return move_utilities
 
 	def utility(self):
 		exist_winner, winner = self.exist_winner() # I repeat this line throughout the program. How to collapse?
@@ -154,7 +158,7 @@ class consolegame(game):
 				move = self.get_human_move()
 			elif self.player == 2:
 			 	#move = self.rand_move()
-		 		print "Before minimax is called, player = ",self.player
+		 		#print "Before minimax is called, player = ",self.player
 			 	move, _ = self.max_utility()[-1]
 			 	self.player = 2
 			 	print "Player %d chose space %r" % (self.player,move)
@@ -196,7 +200,7 @@ class TestSequenceFunctions(unittest.TestCase):
 	
 	def test_utility(self):  #signals unittest module that this is a test
 		tests = [
-			([[0,0,0],[0,0,0],[1,1,1]], -1), # put expected input/output combos here
+			([[1,0,0],[0,1,0],[2,2,1]], -1), # put expected input/output combos here
 			([[0,0,0],[0,0,0],[2,2,2]], 1),
 			([[2,0,0],[1,1,1],[2,2,1]], -1),
 		]
@@ -211,22 +215,41 @@ class TestSequenceFunctions(unittest.TestCase):
 		'''
 
 		tests = [
-			([[0,2,2],[0,1,0],[0,0,1]], ((0,0),1)),
-			#([[0,0,0],[1,1,0],[2,2,0]], ((2,2),0)),
+			([[0,0,0],[0,0,2],[0,1,1]], ((1,1),0)),
+			([[0,0,0],[0,1,2],[2,1,1]], ((1,1),0)),
 			]
 
-		for t in tests:
-			self.g.board = t[0]
-			self.assertEqual(self.g.max_utility(),t[1]) #can raise different assertions - google assert-methods
+	#	for t in tests:
+	#		self.g.board = t[0]
+	#		print "\n"
+	#		#self.assertEqual(self.g.max_utility(),t[1]) #can raise different assertions - google assert-methods
+	#		print "\n"
+	#		print self.g.max_utility()
+	
+	def test_utility_sequence(self):
+		tests = [
+			([[0,0,0],[0,0,2],[0,1,1]], -1), # put expected input/output combos here
+			([[0,0,0],[0,0,2],[2,1,1]], 1),
+			([[0,0,0],[0,1,2],[2,1,1]], -1),
+		]		
+	
+		for i in range(len(tests)):
+			self.g.board = tests[i][0]
+			if i%2 == 0:
+				print "\n"
+				self.g.display_board()
+				print "\n"
+				print "Max utility: ",self.g.max_utility()
+			elif i%2 == 1:
+				print "\n"
+				self.g.display_board()
+				print "\n"
+				print "Min utility: ",self.g.min_utility()
 
-	def test_print_options(self):
-		print self.g.max_utility()
+	#def test_print_options(self):
+	#	print self.g.max_utility()
 
 
 if __name__ == '__main__':
-	#unittest.main(verbosity=0)
-	#g=consolegame()
-	#g.display_board()
-	#print "\n"
-	#print g.max_utility()	
+	#unittest.main(verbosity=2)
 	oneplayer_console()
