@@ -92,7 +92,7 @@ class game():
 			#print "In max, Open spaces list is", open_spaces
 			for space in open_spaces:
 				self.player = 2
-				print "max_utility makes move as player", self.player
+				#print "max_utility makes move as player", self.player #debugging statement
 				self.make_move(space)
 				_ , utility = self.min_utility()[0] #min_utility returns (move,utility)
 				move_utilities.append((space, utility))
@@ -115,7 +115,7 @@ class game():
 			#print "In min, Open spaces list is", open_spaces
 			for space in open_spaces:
 				self.player = 1 #this line added by me to fix a bug - would switch when min was ran twice in a row, running min as player 2
-				print "min_utility makes move as player", self.player
+				#print "min_utility makes move as player", self.player #debugging statement
 				self.make_move(space)
 				_ , utility = self.max_utility()[-1]
 				move_utilities.append((space,utility))
@@ -251,5 +251,5 @@ class TestSequenceFunctions(unittest.TestCase):
 
 
 if __name__ == '__main__':
-	#unittest.main(verbosity=2)
-	oneplayer_console()
+	#unittest.main(verbosity=2) #unit tests
+	oneplayer_console() #launches the game
