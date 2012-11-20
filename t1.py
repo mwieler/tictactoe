@@ -91,7 +91,7 @@ class game():
 			#self.display_board()
 			#print "In max, Open spaces list is", open_spaces
 			for space in open_spaces:
-				self.player = 2
+				self.player = 2 ###	this line added to fix a bug
 				#print "max_utility makes move as player", self.player #debugging statement
 				self.make_move(space)
 				_ , utility = self.min_utility()[0] #min_utility returns (move,utility)
@@ -114,7 +114,7 @@ class game():
 			open_spaces = self.get_open_board_spaces()
 			#print "In min, Open spaces list is", open_spaces
 			for space in open_spaces:
-				self.player = 1 #this line added by me to fix a bug - would switch when min was ran twice in a row, running min as player 2
+				self.player = 1 ###this line added by me to fix a bug - would switch when min was ran twice in a row, running min as player 2
 				#print "min_utility makes move as player", self.player #debugging statement
 				self.make_move(space)
 				_ , utility = self.max_utility()[-1]
@@ -135,7 +135,7 @@ class game():
 
 
 class consolegame(game):
-	def display_board(self):
+	def display_board(self): #use __str__ instead?
 		print self.board[0], '\n', self.board[1], '\n', self.board[2]
 
 	def validate_move(self,(r,c)):
@@ -198,16 +198,16 @@ class TestSequenceFunctions(unittest.TestCase):
 		self.g=consolegame()
 		#set up board
 	
-	def test_utility(self):  #signals unittest module that this is a test
-		tests = [
-			([[1,0,0],[0,1,0],[2,2,1]], -1), # put expected input/output combos here
-			([[0,0,0],[0,0,0],[2,2,2]], 1),
-			([[2,0,0],[1,1,1],[2,2,1]], -1),
-		]
-
-		for t in tests:
-			self.g.board = t[0]
-			self.assertEqual(self.g.utility(),t[1]) #can raise different assertions - google assert-methods
+#	def test_utility(self):  #signals unittest module that this is a test
+#		tests = [
+#			([[1,0,0],[0,1,0],[2,2,1]], -1), # put expected input/output combos here
+#			([[0,0,0],[0,0,0],[2,2,2]], 1),
+#			([[2,0,0],[1,1,1],[2,2,1]], -1),
+#		]
+#
+#		for t in tests:
+#			self.g.board = t[0]
+#			self.assertEqual(self.g.utility(),t[1]) #can raise different assertions - google assert-methods
 
 	def test_max_utility(self):
 		'''
@@ -215,22 +215,25 @@ class TestSequenceFunctions(unittest.TestCase):
 		'''
 
 		tests = [
-			([[0,0,0],[0,0,2],[0,1,1]], ((1,1),0)),
-			([[0,0,0],[0,1,2],[2,1,1]], ((1,1),0)),
+			([[0,0,0],[0,0,0],[0,0,1]], ((1,1),0))
 			]
 
-	#	for t in tests:
-	#		self.g.board = t[0]
-	#		print "\n"
-	#		#self.assertEqual(self.g.max_utility(),t[1]) #can raise different assertions - google assert-methods
-	#		print "\n"
-	#		print self.g.max_utility()
+		for t in tests:
+			print "\n"
+			self.g.board = t[0]
+			self.g.display_board()
+			print "\n"
+			self.assertEqual(self.g.max_utility()[-1],t[1]) #can raise different assertions - google assert-methods
+			print "\n"
+			print self.g.max_utility()
 	
 	def test_utility_sequence(self):
 		tests = [
-			([[0,0,0],[0,0,2],[0,1,1]], -1), # put expected input/output combos here
-			([[0,0,0],[0,0,2],[2,1,1]], 1),
-			([[0,0,0],[0,1,2],[2,1,1]], -1),
+			([[0,0,0],[0,0,0],[0,0,1]], -1), # put expected input/output combos here
+			([[0,0,0],[0,0,0],[0,2,1]], 1),
+			([[0,0,0],[0,1,0],[0,2,1]], 1),
+			([[2,0,0],[0,1,0],[0,2,1]], 1),
+			([[2,0,0],[0,1,1],[0,2,1]], 1),
 		]		
 	
 		for i in range(len(tests)):
@@ -251,5 +254,5 @@ class TestSequenceFunctions(unittest.TestCase):
 
 
 if __name__ == '__main__':
-	#unittest.main(verbosity=2) #unit tests
-	oneplayer_console() #launches the game
+	unittest.main(verbosity=2) #unit tests
+	#oneplayer_console() #launches the game
