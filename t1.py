@@ -254,5 +254,5 @@ class TestSequenceFunctions(unittest.TestCase):
 
 
 if __name__ == '__main__':
-	unittest.main(verbosity=2) #unit tests
-	#oneplayer_console() #launches the game
+	#unittest.main(verbosity=2) #unit tests
+	oneplayer_console() #launches the game
