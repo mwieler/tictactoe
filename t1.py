@@ -252,7 +252,6 @@ class TestSequenceFunctions(unittest.TestCase):
 	#def test_print_options(self):
 	#	print self.g.max_utility()
 
-
 if __name__ == '__main__':
 	#unittest.main(verbosity=2) #unit tests
 	oneplayer_console() #launches the game
