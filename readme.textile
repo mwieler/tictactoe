@@ -11,7 +11,7 @@ This is the first interactive program I've written (my prior experience was writ
 # <b>A few basic practices that make development easier</b> -- write functions that do one thing well; write functions that don't have unnecessary lurking assumptions about the state of your program, and if you have to make assumptions, explicitly make them function parameters; don't duplicate code; don't use global variables when a narrower scope will suffice, use a good version-control solution (Github works) 
 
 h3. Next Steps
-# <b>Minimax is a brute-force solution</b> -- it finds the best move by conducting an exhaustive consideration of all possibilities.  In the future, I'd like to find a lighter solution - perhaps by:
+<b>Minimax is a brute-force solution</b> -- it finds the best move by conducting an exhaustive consideration of all possibilities.  In the future, I'd like to find a lighter solution - perhaps by:
 ## using alpha-beta pruning of the game tree 
 ## giving the computer heuristic shortcuts (e.g, in general, go in the middle space, or the corners, and avoid the other spaces if possible)
 ## taking a probabilistic approach rather than analytically deducing the best move.  One way to accomplish this could be to pit two computers that each make random moves against each other and keeping track of the outcomes (win/tie/loss) that each move in a given state of the game leads to in each trial.  After enough games, identifying the moves that tend to lead to wins would be a simple matter of tallying up the totals and choosing the moves that lead to the highest number of wins.
