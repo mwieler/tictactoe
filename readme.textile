@@ -3,19 +3,19 @@ h1. Tic-Tac-Toe
 Face off against an unbeatable computer opponent via your terminal!
 
 <h3> Project Background and Motivation </h3>
-This is the first interactive program I've written (my prior experience was writing one long R script).  This project gave me my first exposure to the following topics:
+This is the first interactive program I've written.  Writing it exposed me to the following topics:
 
 # <b>Object orientation</b> -- using classes (bundles of code & data) can help make programs readable, intuitive and more easily extended or re-used in a new context.
-# <b>Recursive algorithms</b> -- this program uses a 'minimax' algorithm to returns a list of moves and their utilities.  Because the algorithm is recursive, it searches the game tree depth-first.  The algorithm  loops over all possible moves for every possible state of the game, and only breaks out of the loop when the game is over.  So it takes the necessary steps to build the game tree, and uses that information to determine the worst possible outcome for a given move.
-# <b>A few basic practices that make development easier</b> -- write functions that do one thing well; write functions that don't have unnecessary lurking assumptions about the state of your program, and if you have to make assumptions, explicitly make them function parameters; don't duplicate code; don't use global variables when a narrower scope will suffice, use a good version-control solution (Github works). 
+# <b>Recursive algorithms</b> -- this program uses a 'minimax' algorithm to return a list of moves and their utilities.  Because the algorithm is recursive, it searches the game tree depth-first.  The algorithm  loops over all possible moves for every possible state of the game, and only breaks out of the loop when the game is over.  So it takes the necessary steps to build the game tree, and uses that information to determine the worst possible outcome for a given move.
+# <b>A few basic practices that make development easier</b> -- write functions that do one thing well, write functions that don't have unnecessary lurking assumptions about the state of your program. If you have to make assumptions, explicitly make them function parameters. Don't duplicate code, don't use global variables when a narrower scope will suffice, use a good version-control solution (Github works). 
 
 <h3> Next Steps </h3>
 <b>Minimax is a brute-force solution</b> -- it finds the best move by conducting an exhaustive consideration of all possibilities.  In the future, I'd like to find a lighter solution - perhaps by:
 ## using alpha-beta pruning of the game tree 
-## giving the computer heuristic shortcuts (e.g, in general, go in the middle space, or the corners, and avoid the other spaces if possible)
-## taking a probabilistic approach rather than analytically deducing the best move.  One way to accomplish this could be to pit two computers that each make random moves against each other and keeping track of the outcomes (win/tie/loss) that each move in a given state of the game leads to in each trial.  After enough games, identifying the moves that tend to lead to wins would be a simple matter of tallying up the totals and choosing the moves that lead to the highest number of wins.
+## giving the computer heuristic shortcuts (e.g, in general, go in the middle space, or the corners, and avoid the other spaces)
+## taking a probabilistic approach rather than analytically deducing the best move.  One way to accomplish this could be to pit two computers that each make random moves against each other and keeping track of the outcomes (win/tie/loss) that each move in a given state of the game leads to in each trial.  After enough games, identifying the moves that tend to lead to wins would be a matter of tallying up the totals and choosing the moves that lead to the highest number of wins.
 
-<h3> How to Play this Game </h3>
-Just download the source and run the Python game in your terminal:
+<h3> How to Play the Game </h3>
+Just download the source and run it in Python in your terminal:
 
 bc. python t1.py
